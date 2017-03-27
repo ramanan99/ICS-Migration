@@ -1,0 +1,705 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Changes in ICS 4.7 Product</title>
+  </head>
+  <body>
+    <br>
+    <div align="center"><u><b>Difference in files/directories between
+          the default WebNMS 4.7-SP4 product and the existing ICS MMSC
+          gateway product (over 4.7 SP4)</b></u><br>
+    </div>
+    <br>
+    4.7-SP4 product : Refers to the default WebNMS 4.7 SP4 product <br>
+    4.7 SP4 ICS product : Refers to the existing deployed ICS product <br>
+    <br>
+    <table width="100%" cellspacing="2" cellpadding="2" border="1">
+      <tbody>
+        <tr>
+          <td rowspan="1" colspan="5" valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" bgcolor="#ffff99" align="center"><b>Directory
+              / File</b><b><br>
+            </b> </td>
+          <td valign="top" bgcolor="#ffff99" align="center"><b>Changed
+              files</b><b> and Type of change<br>
+            </b> </td>
+          <td valign="top" bgcolor="#ffff99" align="center"><b>Nature of
+              change</b><b><br>
+            </b> </td>
+          <td valign="top" bgcolor="#ffff99" align="center"><b>Changed
+              Needed</b><b><br>
+            </b><b>Merge/Replacement</b><b><br>
+            </b> </td>
+          <td valign="top" bgcolor="#ffff99" align="center"><b>Remarks</b><b><br>
+            </b> </td>
+        </tr>
+        <tr>
+          <td rowspan="1" colspan="5" valign="top">The following
+            files/directories are not changed in 4.7 SP4 ICS product and
+            hence the corresponding files/directories can be replaced
+            with the ones present in <b>5.2 product</b><b>:<br>
+            </b>ccs<br>
+            configtasks<br>
+            icons<br>
+            idls<br>
+            logs<br>
+            mibs<br>
+            provisioningresults<br>
+            state<br>
+            stylesheets<br>
+            data<br>
+            reports<br>
+            servlets<br>
+            unauthenticatedservlets<br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">provisioningtemplates </td>
+          <td valign="top">directory need to be copied from 4.7_ICS_home
+            and pasted in 5.2_ICS_Home </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">lib </td>
+          <td valign="top">all files from 5.2 product has to be replaced
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">jsp </td>
+          <td valign="top">all 3 jsp files from 5.2 SP1 hotfixppm has to
+            be merged </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">webclient<br>
+          </td>
+          <td valign="top">common/images/adventnet/adventnetlogo.jpg<br>
+            common/images/adventnet/topheader.jpg and <br>
+            common/images/mothblues.gif<br>
+            common/images/motorola/moto_logo.jpg<br>
+            common/images/motorola/moto_logo.jpg_DEFAULT<br>
+            common/images/motorola/moto_logo.jpg_DEFAULT<br>
+            common/images/motorola/topheader.jpg_DEFAULT<br>
+            <br>
+            <b>
+              Merge the below files:</b><br>
+            common/jsp/Login.jsp<br>
+            common/jsp/Login.jsp_DEFAULT<br>
+          </td>
+          <td valign="top"><b>Replace these files<br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              Merge these files<br>
+              <br>
+              <br>
+            </b> </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">bin<br>
+          </td>
+          <td valign="top">ConfigurationUpdater.sh<br>
+            ShutDown.sh<br>
+            UpdateManager.sh<br>
+            backup/BackupDB.sh<br>
+            backup/RestoreDB.sh<br>
+            compileJSP.sh<br>
+            startApplicationClient.sh<br>
+            startnms.sh<br>
+            reinitialize_nms.sh<br>
+            ----<br>
+            #ICS Specific files: (Same file can be retained)<br>
+            backup/DoBackup.sh<br>
+            backup/DoRestore.sh <br>
+            configSANE.sh<br>
+            configSecurity.sh<br>
+            gen_tomcat_cert.sh<br>
+            modifyDB.sh<br>
+            startsane.sh<br>
+            title-check.sh<br>
+            <br>
+            #Same files can be retained:<br>
+            backup/TablesToRestore.conf
+            $ICS_BIN/backup/TablesToRestore.conf<br>
+            createCertificates.sh $ICS_BIN/createCertificates.sh<br>
+          </td>
+          <td valign="top"><b>Merge these files<br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+            </b><br>
+            ----<b><br>
+            </b><b><b>Merge these files</b><br>
+            </b>(Main change will be to add<br>
+            <b>$NMS_SERVER_CLASSES</b> in classpath)<b><br>
+              <br>
+              <br>
+            </b> </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">conf<br>
+          </td>
+          <td valign="top">securitydbData.xml- Merge the entries
+            specifically the password related entry<br>
+            <br>
+            DatabaseAliases.conf &amp; DatabaseSchema.conf &amp;
+            relationalclasses.conf<br>
+            Merge ICS entries in 52SP1 file (other than TopoDB, EventDB,
+            AlertDB, MapDB &amp; Performance DB entries)<br>
+            <br>
+            NmsProcessesBE.conf &amp; NmsProcessesFE.conf - Merge ICS
+            processes in 52SP1 file<br>
+            (<i><b>RunApacheModule </b></i>process needs to be removed)<br>
+            <br>
+            logging_parameters.conf - logging_parameters.conf file is
+            not needed Include the new entries (EMH project specific) in
+            log4j.xml<br>
+            <br>
+            <b>clientparameters.conf</b>: (Merge the file - specifically
+            ensure for the below entries. If they aren't present, add
+            them)<br>
+            <font size="-1" color="#3333ff" face="Courier New, Courier,
+              monospace">MULTIPLE_ALERT_VIEW="false"<br>
+              MULTIPLE_EVENT_VIEW="false"<br>
+              MULTIPLE_LIST_VIEW="false"<br>
+              MULTIPLE_INVENTORY_VIEW="false"<br>
+              REFRESH_STATS_EACH_TIME="false"<br>
+              REFRESH_NETWORK_DATABASE_EACH_TIME="true"<br>
+              REFRESH_ALERTS_EACH_TIME="false"</font><br>
+            <br>
+            <b><u>File that need to be discarded</u>:</b><br>
+            sybase/database_params.conf<br>
+            solid/database_params.conf<br>
+            database_params.conf<br>
+            <br>
+            <u><b>File can be replaced as such with 4.7 SP4 ICS versions</b></u><b>:</b><br>
+            seed.file<br>
+            snmpDatabaseSchema.config<br>
+            <br>
+            <b><u>Merge the entries in the below files</u>: (Merge
+              entries from 4.7 SP4 ICS product into 5.2 SP1 files)</b><br>
+            SQLDatatypes.xml<br>
+            RebrandingItems.xml<br>
+            Polling.conf<br>
+            SnmpDefaultProperties.xml<br>
+            WebNMS.jnlp<br>
+            alert.filters<br>
+            discovery.filters<br>
+            event.filters<br>
+            help.conf<br>
+            listIcon.data<br>
+            mapIcon.data<br>
+            nmsInterfaces.conf<br>
+            policy.conf<br>
+            serverparameters.conf<br>
+            tl1craftinterface.config<br>
+            transportProvider.conf<br>
+            trap.filters<br>
+            OIDType.data<br>
+            trapport.conf<br>
+            launcher_conf.txt<br>
+          </td>
+          <td valign="top">Merge<br>
+            <br>
+            Merge<br>
+            <br>
+            <br>
+            <br>
+            Merget<br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">html<br>
+          </td>
+          <td valign="top"><u><b>Changed .properties files</b></u><br>
+            CLIBrowser.properties<br>
+            EnglishToNative.properties<br>
+            EnglishToNative.properties_DEFAULT<br>
+            LoginInfoUI.properties<br>
+            MibBrowser.properties<br>
+            ReinitializeNmsResources.properties<br>
+            RuntimeAdministrationResources.properties<br>
+            SASusers/MibSettings.config<br>
+            SecurityAdministrationResources.properties<br>
+            ShutDownNmsServerResources.properties<br>
+            UpdateManagerResources_en_US.properties<br>
+            launcher.properties<br>
+            tl1craftinterface_i18n.properties<br>
+            <br>
+            <u><b>Changed xml files</b></u><br>
+            defaultsToAllUsers/dbmenu.xml<br>
+            defaultsToAllUsers/framemenu.xml<br>
+            defaultsToAllUsers/toolbar.xml<br>
+            defaultsToNewUsers/Tree.xml<br>
+            defaultsToNewUsers/Tree.xml_DEFAULT<br>
+          </td>
+          <td valign="top">Merge needed for both the files<br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">images<br>
+          </td>
+          <td valign="top">about.png<br>
+            adventneticon.jpg<br>
+            logoPane.png<br>
+            moto_logopane.jpg<br>
+            moto_logopane.jpg_DEFAULT<br>
+            motorolaicon.jpg<br>
+            motorolaicon.jpg_DEFAULT<br>
+            nokia.jpg <br>
+            screen.png<br>
+            splash_motorola.png<br>
+            splash_motorola.png_DEFAULT<br>
+            <br>
+          </td>
+          <td valign="top">Replace these files <u><i><b>from </b></i></u><u><i><b>4.7
+                  SP4 ICS product</b></i></u><u><i><b> </b></i></u></td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">listmenus<br>
+          </td>
+          <td valign="top"><b><u>No changes in the below files</u>:</b><br>
+            acmemenu.xml<br>
+            defaultmapmenu.xml<br>
+            editmenu.xml<br>
+            filemenu.xml<br>
+            gasmenu.xml<br>
+            gatewaymenu.xml<br>
+            hubmenu.xml<br>
+            interfacemonitormenu.xml<br>
+            ipnet.xml<br>
+            linkmenu.xml<br>
+            listmenu.dtd<br>
+            monitormenu.xml<br>
+            nodeconfiguremenu.xml<br>
+            nodeeditmenu.xml<br>
+            nodefaultmenu.xml<br>
+            nodemonitormenu.xml<br>
+            nodetestmenu.xml<br>
+            performancemenu.xml<br>
+            portmenu.xml<br>
+            printermenu.xml<br>
+            routermenu.xml<br>
+            snmpconfig.xml<br>
+            snmpmenu_win.xml<br>
+            snmpmonitor.xml<br>
+            tl1menu.xml<br>
+            wanmenu.xml<br>
+            <br>
+            <u><b>Below files need to be merged</b></u><br>
+            interfacemenu.xml<br>
+            snmpmenu.xml<br>
+            objectmenu.xml<br>
+            netmenu.xml<br>
+            nodemenu.xml<br>
+            <br>
+            <b><u>Below files are present only in 4.7 SP4 ICS Product
+                and can be copied under NMS_HOME/listmenus</u>:</b><br>
+            AckFwdSystemLinkMenu.xml, AlarmRecordMenu.xml,
+            AttributeValueChangeEventMenu.xml, AuditControlMenu.xml,
+            AvailabilityEventMenu.xml, AvailabilityInformationMenu.xml,
+            BackupServerLinkMenu.xml, BillingServerLinkMenu.xml,
+            BlackBoxDataConfigMenu.xml, BlackBoxLogStreamMenu.xml,
+            BmgwClientThrottleLinkMenu.xml,
+            BmgwServerThrottleLinkMenu.xml,
+            BmgwServerUnavailableLinkMenu.xml,
+            CapacityLicenseLinkMenu.xml, ClassOfServiceMenu.xml,
+            CneomiManagementEventMenu.xml, CnpACLMenu.xml,
+            CnpAirFilterMenu.xml, CnpCageInfoMenu.xml, CnpCageMenu.xml,
+            CnpClusterManagerMenu.xml, CnpClusterManagerPGMenu.xml,
+            CnpEmsSensorMenu.xml, CnpEmsServerMenu.xml,
+            CnpEmsServerPGMenu.xml, CnpEthernetPortGroupMenu.xml,
+            CnpEthernetPortMenu.xml, CnpExtSwitchMenu.xml,
+            CnpExternalServerMenu.xml, CnpFanMenu.xml,
+            CnpFileSystemInfoMenu.xml, CnpFruInfoMenu.xml,
+            CnpLocationInfoMenu.xml, CnpMonDevInfoMenu.xml,
+            CnpPEMMenu.xml, CnpPSBlackBoxDCMenu.xml,
+            CnpPSBlackBoxLSMenu.xml, CnpPSCoreFileMgmtLSMenu.xml,
+            CnpPayloadServerMenu.xml, CnpPayloadServerPGMenu.xml,
+            CnpRTMMenu.xml, CnpRaidControllerMenu.xml,
+            CnpRaidFanMenu.xml, CnpRaidLogicalDriveMenu.xml,
+            CnpRaidLogicalUnitMenu.xml, CnpRaidMenu.xml,
+            CnpRaidPEMMenu.xml, CnpRaidPhysicalDriveMenu.xml,
+            CnpRaidPortGroupMenu.xml, CnpRaidPortMenu.xml,
+            CnpServerInfoMenu.xml, CnpShelfEEPROMMenu.xml,
+            CnpShmmBMCMenu.xml, CnpShmmMenu.xml, CnpSwitchMenu.xml,
+            CnpSwitchUnitMenu.xml, CnpSystemAlarmPanelMenu.xml,
+            CnpSystemInfoMenu.xml, CnpTermServerMenu.xml,
+            CodeDataServerMenu.xml, ConfigurationDataControlMenu.xml,
+            CongestionMenu.xml, ConnectivityDataMenu.xml,
+            ConstituentMenu.xml, ContentAdaptationLinkMenu.xml,
+            CoreFileMgmtLogStreamMenu.xml, DiagnosticsControlMenu.xml,
+            DiskUsageMenu.xml, DnsServerLinkMenu.xml, EndpointMenu.xml,
+            EnumServerLinkMenu.xml, EnumServiceLinkMenu.xml,
+            EsmeLinkMenu.xml, EsmeLocalConnectionLinkMenu.xml,
+            EsmeNetworkConnectionLinkMenu.xml,
+            EsmeQueuedMessageLinkMenu.xml, EventBufferMenu.xml,
+            EventControlMenu.xml, EventLogMenu.xml, EventRecordMenu.xml,
+            ExternalIPLinkMenu.xml, ExternalIpInterfaceMenu.xml,
+            FileSystemMenu.xml, GeoRedSMSReplLinkMenu.xml,
+            GeoRedSMSReplThrottleLinkMenu.xml, HapNeControlMenu.xml,
+            HssServerLinkMenu.xml, HssServerThrottleLinkMenu.xml,
+            HssServerUnavailableConnectionMenu.xml,
+            ImsGsmGwClientThrottleLinkMenu.xml,
+            ImsGsmGwServerLinkMenu.xml,
+            ImsGsmGwServerThrottleLinkMenu.xml, InterMateLinkMenu.xml,
+            InterfaceContainerMenu.xml, IpConfigMenu.xml,
+            KeyStatsMgmtControlMenu.xml, LnpServerLinkMenu.xml,
+            LoadBalancerLinkMenu.xml, LogStreamDataConfigMenu.xml,
+            LogStreamMenu.xml, LogicalUnitStreamMenu.xml,
+            M2paLinkMenu.xml, M2paLogicalUnitMenu.xml,
+            M2paSystemInfoMenu.xml, ManagementInformationMenu.xml,
+            MateLinkMenu.xml, MessagingSystemMenu.xml, Mm1LinkMenu.xml,
+            MpSystemConfigMenu.xml, MsgArchiveServerLinkMenu.xml,
+            MsgBladeLUContainerMenu.xml, MsgBladeLUMenu.xml,
+            MsmMemUtilizationMenu.xml, NeAccessControlMenu.xml,
+            NeDataLocMenu.xml, NetworkElementManagementMenu.xml,
+            ObjectCreationDeletionEventMenu.xml, PeerMMSCLinkMenu.xml,
+            PersonalizationConfigMenu.xml, PhysicalUnitStreamMenu.xml,
+            PrepaidServerLinkMenu.xml,
+            PrepaidServerThrottleLinkMenu.xml,
+            ProgressIndicationManagementInformationMenu.xml,
+            QueueOverflowMenu.xml, RELATIONOBJECTMenu.xml,
+            RelationshipAttributeMenu.xml,
+            RelationshipChangeEventMenu.xml,
+            RelationshipChangeInformationMenu.xml,
+            RelationshipTypeMenu.xml, RemoteSMSCThrottleLinkMenu.xml,
+            SBNEMenu.xml, SCSCFClientThrottleLinkMenu.xml,
+            SCSCFServerThrottleLinkMenu.xml, SmppClientLinkMenu.xml,
+            SmppServerLinkMenu.xml, SmscLinkMenu.xml,
+            SmscLocalConnectionLinkMenu.xml,
+            SmscNetworkConnectionLinkMenu.xml,
+            SmscQueuedMessageLinkMenu.xml, SmtpClientLinkMenu.xml,
+            SmtpLinkMenu.xml, SmtpLocalConnectionLinkMenu.xml,
+            SmtpNetworkConnectionLinkMenu.xml,
+            SmtpQueuedMessageLinkMenu.xml, SmtpServerLinkMenu.xml,
+            SoftwareUpgradeControlMenu.xml, SoftwareVersionMenu.xml,
+            SpamServerLinkMenu.xml, SpamServerThrottleLinkMenu.xml,
+            SpamServerUnavailableConnectionMenu.xml,
+            Ss7AssociationLinkMenu.xml, Ss7PCLinkMenu.xml,
+            Ss7ServiceMenu.xml, StatSizeAuditLinkMenu.xml,
+            StateChangeEventMenu.xml, StatisticsThresholdMenu.xml,
+            SubLdapServerLinkMenu.xml, SynchronizationControlMenu.xml,
+            TapClientLinkMenu.xml, TapLinkMenu.xml,
+            TapLocalConnectionLinkMenu.xml,
+            TapNetworkConnectionLinkMenu.xml, TranscoderLinkMenu.xml,
+            UsageControlServiceLinkMenu.xml, UserDefinedEventMenu.xml,
+            ValueChangeInformationMenu.xml, VaspLinkMenu.xml,
+            XmlClientLinkMenu.xml, XmlcLocalConnectionLinkMenu.xml,
+            XmlcNetworkConnectionLinkMenu.xml<br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">projects<br>
+          </td>
+          <td valign="top" bgcolor="#ffffff"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">users/root<br>
+          </td>
+          <td valign="top">Tree.xml<br>
+            FramesInfo.conf<br>
+            Tree.xml_DEFAULT<br>
+            WebClientState.properties<br>
+            clientparameters.conf<br>
+          </td>
+          <td valign="top">Merge needed<br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">users/lev/<br>
+          </td>
+          <td valign="top"><b><u>Below files are present only in 4.7 SP4
+                ICS Product and can be copied under NMS_HOME/users/lev</u>:</b><br>
+            toolbar.xml<br>
+            dbmenu.xml<br>
+            framemenu.xml<br>
+            listmenus/interfacemenu.xml<br>
+            listmenus/listmenu.dtd<br>
+            listmenus/netmenu.xml<br>
+            listmenus/nodemenu.xml<br>
+            listmenus/snmpmenu.xml<br>
+            toolbar.xml<br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">WEB-INF </td>
+          <td valign="top">web-footer.xml<br>
+            web.xml<br>
+            ---<br>
+            lib/AdventNetWCFComponents.jar<br>
+            lib/AdventNetWCFCore.jar<br>
+            lib/AdventNetWCFSession.jar<br>
+            lib/commons-validator.jar<br>
+            lib/jakarta-oro.jar<br>
+            lib/jgraph.jar<br>
+            lib/jstl.jar<br>
+            lib/standard.jar<br>
+            lib/struts-el.jar<br>
+            lib/struts.jar<br>
+            lib/taglibs-mailer.jar<br>
+            lib/webclient-admin.jar<br>
+            lib/webclient-common.jar<br>
+            lib/webclient-fault.jar<br>
+            lib/webclient-home.jar<br>
+            lib/webclient-map.jar<br>
+            lib/webclient-perf.jar<br>
+            lib/webclient-report.jar<br>
+            lib/webclient-topo.jar<br>
+            <br>
+          </td>
+          <td valign="top">Merge the files:<br>
+            <br>
+            ----<br>
+            Replace these files<br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+          <td valign="top"><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  </body>
+</html>
