@@ -1,0 +1,28 @@
+No change in the following directories/files:
+ccs
+configtasks
+icons
+idls
+logs
+mibs
+provisioningresults
+state
+stylesheets
+
+jsp - all 3 jsp files from 5.2 SP1 hotfixppm has to be merged
+lib - all files from 5.2 SP1 hotfixppm has to be replaced
+provisioningtemplates - directory need to be copied from 4.7_ICS_home and pasted in 5.2_ICS_Home
+
+webclient
+Replace the below files:
+common/images/adventnet/adventnetlogo.jpg
+common/images/adventnet/topheader.jpg and
+common/images/mothblues.gif
+common/images/motorola/moto_logo.jpg
+common/images/motorola/moto_logo.jpg_DEFAULT
+common/images/motorola/moto_logo.jpg_DEFAULT
+common/images/motorola/topheader.jpg_DEFAULT
+
+Merge the below files:
+common/jsp/Login.jsp
+common/jsp/Login.jsp_DEFAULT
