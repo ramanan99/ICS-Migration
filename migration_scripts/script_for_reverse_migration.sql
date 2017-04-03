@@ -185,7 +185,7 @@ drop index PARENTOBJ_ndx on PolledData;
 
 SELECT 'create table POLLUSERPROPS' AS 'MIGRATION PROCESS STATUS ... ';
 drop table POLLUSERPROPS;
-create table POLLUSERPROPS (NAME varchar(100) NOT NULL, AGENT varchar(100) NOT NULL, OID varchar(200) NOT NULL, OWNERNAME varchar(25) NOT NULL, PROPNAME varchar(150) NOT NULL, PROPVAL varchar(150));
+create table POLLUSERPROPS (NAME varchar(100) NOT NULL, AGENT varchar(100) NOT NULL, OID varchar(200) NOT NULL, OWNERNAME varchar(25) NOT NULL default 'NULL', PROPNAME varchar(150) NOT NULL, PROPVAL varchar(150));
 create index POLLUSERPROPS0_ndx on POLLUSERPROPS (NAME);
 create index POLLUSERPROPS1_ndx on POLLUSERPROPS (AGENT);
 create index POLLUSERPROPS2_ndx on POLLUSERPROPS (OID);
@@ -372,7 +372,7 @@ SELECT 'create table DBINTERFACES' AS 'MIGRATION PROCESS STATUS ... ';
 create table DBINTERFACES (VALUESTRING varchar(250));
 
 SELECT 'alter table ManagedObject  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ManagedObject add column OWNERNAME varchar(25) not NULL after NAME;
+alter table ManagedObject add column OWNERNAME varchar(25) not NULL default 'NULL' after NAME;
 alter table ManagedObject change column STATUSPOLLENABLED STATUSPOLLENABLED varchar(10);
 update ManagedObject set STATUSPOLLENABLED='true' where STATUSPOLLENABLED like '1';
 update ManagedObject set STATUSPOLLENABLED='false' where STATUSPOLLENABLED like '0';
