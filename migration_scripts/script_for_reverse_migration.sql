@@ -192,7 +192,7 @@ create index POLLUSERPROPS2_ndx on POLLUSERPROPS (OID);
 create index POLLUSERPROPS3_ndx on POLLUSERPROPS (OWNERNAME);
 
 SELECT 'alter Alert table' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Alert add column OWNERNAME varchar(100) NOT NULL after WEBNMS;
+alter table Alert add column OWNERNAME varchar(25) NOT NULL default 'NULL' after WEBNMS;
 alter table Alert add column MAPNAME varchar(100) default NULL after SOURCE;
 alter table Alert add column STAGE INTEGER default 0 after WHO;
 alter table Alert add column PRIORITY INTEGER default 0 after OWNERNAME;
@@ -206,7 +206,7 @@ update DBALERT set VALUESTRING = (select DISCRIMINATOR from Alert where ENTITY=K
 alter table Alert drop column DISCRIMINATOR;
 
 SELECT 'alter ALERTUSERPROPS table' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ALERTUSERPROPS add column OWNERNAME VARCHAR(25) NOT NULL;
+alter table ALERTUSERPROPS add column OWNERNAME varchar(25) NOT NULL default 'NULL';
 update ALERTUSERPROPS set OWNERNAME='NULL' where OWNERNAME is null;
 alter table ALERTUSERPROPS add column `NAME` varchar(100) NOT NULL first;
 alter table ALERTUSERPROPS drop primary key;
@@ -225,7 +225,7 @@ SELECT 'create table DBMAP' AS 'MIGRATION PROCESS STATUS ... ';
 create table DBMAP (KEYSTRING VARCHAR(250) NOT NULL, VALUESTRING varchar(250), PRIMARY KEY (KEYSTRING));
 create index DBMAP0_ndx on DBMAP (KEYSTRING);
 insert into DBMAP values ('Failed_Objects_Map.netmap','MapDB');
-alter table MapDB add column OWNERNAME varchar(25) NOT NULL after NAME;
+alter table MapDB add column OWNERNAME varchar(25) NOT NULL default 'NULL' after NAME;
 
 alter table MapDB change column ANCHORED ANCHORED varchar(10);
 update MapDB set ANCHORED='true' where ANCHORED like '1';
@@ -249,7 +249,7 @@ alter table MapDB drop column `TYPE`;
 create index MapDB0_ndx ON MapDB (NAME);
 
 SELECT 'alter MapSymbol table' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MapSymbol add column OWNERNAME varchar(25) NOT NULL AFTER NAME;
+alter table MapSymbol add column OWNERNAME varchar(25) NOT NULL default 'NULL' AFTER NAME;
 
 alter table MapSymbol add column ANCHORED_STR varchar(10) default NULL AFTER PARENTNAME;
 update MapSymbol set ANCHORED_STR = 'true' where ANCHORED is true;
@@ -283,7 +283,7 @@ alter table MapSymbol drop column MAPWIDTH;
 alter table MapSymbol drop column MAPHEIGHT;
 
 SELECT 'alter MapContainer table' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MapContainer add column OWNERNAME varchar(25) NOT NULL AFTER MAPNAME;
+alter table MapContainer add column OWNERNAME varchar(25) NOT NULL default 'NULL' AFTER MAPNAME;
 alter table MapContainer add column OBJNAME varchar(100) NOT NULL after NAME;
 alter table MapContainer add column LABEL varchar(200) after OWNERNAME;
 alter table MapContainer add column ICONNAME varchar(100) after LABEL;
@@ -399,11 +399,11 @@ create index ManagedObject1_ndx on ManagedObject (OWNERNAME);
 create index ManagedObject2_ndx on ManagedObject (PARENTKEY);
 
 SELECT 'alter table ManagedGroupObject  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ManagedGroupObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ManagedGroupObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ManagedGroupObject set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ManagedGroupObject.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table TopoObject  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TopoObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TopoObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TopoObject set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TopoObject.MOID group by ManagedObject.MOID);
 
 alter table TopoObject change column ISDHCP ISDHCP varchar(10);
@@ -427,7 +427,7 @@ update TopoObject set ISSNMP='true' where ISSNMP like '1';
 update TopoObject set ISSNMP='false' where ISSNMP like '0';
 
 SELECT 'alter table Node  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Node add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Node add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Node set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Node.MOID group by ManagedObject.MOID);
 
 alter table Node change column ISROUTER ISROUTER varchar(10);
@@ -435,7 +435,7 @@ update Node set ISROUTER='true' where ISROUTER like '1';
 update Node set ISROUTER='false' where ISROUTER like '0';
 
 SELECT 'alter table Network  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Network add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL  after MOID;
+alter table Network add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL'  after MOID;
 update Network set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Network.MOID group by ManagedObject.MOID);
 
 alter table Network change column DISCOVER DISCOVER varchar(10);
@@ -443,46 +443,46 @@ update Network set DISCOVER='true' where DISCOVER like '1';
 update Network set DISCOVER='false' where DISCOVER like '0';
 
 SELECT 'alter table SnmpNode  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SnmpNode add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SnmpNode add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SnmpNode set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SnmpNode.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table SnmpInterface  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SnmpInterface add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SnmpInterface add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SnmpInterface set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SnmpInterface.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table TL1Node  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TL1Node add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TL1Node add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TL1Node set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID =TL1Node.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table TL1Interface  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TL1Interface add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TL1Interface add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TL1Interface set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TL1Interface.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table IpAddress  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table IpAddress add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table IpAddress add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update IpAddress set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = IpAddress.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table SwitchObject  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SwitchObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SwitchObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SwitchObject set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SwitchObject.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table PortObject  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table PortObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PortObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PortObject set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PortObject.MOID group by ManagedObject.MOID);
 
 SELECT 'alter table Printer  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Printer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Printer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Printer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Printer.MOID group by ManagedObject.MOID);
 alter table Printer drop column CONSOLELIGHTSTRING;
 
 SELECT 'alter table CORBANode  populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
 alter table CORBANode add column NAME varchar(100) first;
-alter table CORBANode add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CORBANode add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CORBANode set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CORBANode.MOID group by ManagedObject.MOID);
 
 SELECT 'alter TOPOUSERPROPS table' AS 'MIGRATION PROCESS STATUS ... ';
 alter table TOPOUSERPROPS add column NAME varchar(100) NOT NULL first;
-alter table TOPOUSERPROPS add column OWNERNAME varchar(25) NOT NULL;
+alter table TOPOUSERPROPS add column OWNERNAME varchar(25) NOT NULL default 'NULL';
 update TOPOUSERPROPS set NAME=(select ManagedObject.NAME from ManagedObject where TOPOUSERPROPS.MOID=ManagedObject.MOID);
 alter table TOPOUSERPROPS drop PRIMARY KEY;
 
@@ -496,7 +496,7 @@ alter table ObjectSchedulerRUNNABLE drop column CLASSNAME;
 alter table ObjectSchedulerRUNNABLE drop index ObjectSchedulerRUNNABLE0_ndx;
 create index ObjectSchedulerRUNNABLE0_ndx on ObjectSchedulerRUNNABLE (TIMEVAL);
 create index ObjectSchedulerRUNNABLE1_ndx on ObjectSchedulerRUNNABLE (VALUESTRING);
-alter table GroupTable add column OWNERNAME varchar (25) NOT NULL after NAME;
+alter table GroupTable add column OWNERNAME varchar(25) NOT NULL default 'NULL' after NAME;
 alter table GroupTable add column MEMBEROWNERNAME varchar (25) NOT NULL after MEMBERNAME;
 alter table GroupTable drop PRIMARY KEY;
 
@@ -525,7 +525,7 @@ create table  ALERTLOGGER (VALUESTRING varchar(250));
 SELECT 'alter Event table' AS 'MIGRATION PROCESS STATUS ... ';
 alter table Event add column DDOMAIN varchar(100) default NULL after CATEGORY;
 alter table Event add column HELPURL varchar(100) default NULL after SOURCE;
-alter table Event add column OWNERNAME varchar(25) NOT NULL after GROUPNAME;
+alter table Event add column OWNERNAME varchar(25) NOT NULL default 'NULL' after GROUPNAME;
 alter table Event drop column DISCRIMINATOR;
 
 SELECT 'Adding OWNERNAME column to custom Event tables' AS 'MIGRATION PROCESS STATUS ... ';
@@ -547,7 +547,7 @@ create table DBEVENT (KEYSTRING VARCHAR(250) NOT NULL, VALUESTRING varchar(250),
 
 SELECT 'alter EVENTUSERPROPS table' AS 'MIGRATION PROCESS STATUS ... ';
 alter table EVENTUSERPROPS change column ID NAME INTEGER;
-alter table EVENTUSERPROPS add column OWNERNAME varchar(25) NOT NULL after NAME;
+alter table EVENTUSERPROPS add column OWNERNAME varchar(25) NOT NULL default 'NULL' after NAME;
 alter table EVENTUSERPROPS drop primary key;
 create index EVENTUSERPROPS0_ndx on EVENTUSERPROPS (NAME);
 create index EVENTUSERPROPS1_ndx  on EVENTUSERPROPS (OWNERNAME);
@@ -556,283 +556,283 @@ SELECT 'RENAME AuthAudit table to AuthAuditExt' AS 'MIGRATION PROCESS STATUS ...
 alter table AuthAudit rename to AuthAuditExt;
 
 SELECT 'alter PhysicalContainer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table PhysicalContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PhysicalContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PhysicalContainer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PhysicalContainer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter PhysicalElement add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table PhysicalElement add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PhysicalElement add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PhysicalElement set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PhysicalElement.MOID group by ManagedObject.MOID);
 
 SELECT 'alter PhysicalSubUnit add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table PhysicalSubUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PhysicalSubUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PhysicalSubUnit set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PhysicalSubUnit.MOID group by ManagedObject.MOID);
 
 SELECT 'alter PhysicalUnit add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table PhysicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PhysicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PhysicalUnit set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PhysicalUnit.MOID group by ManagedObject.MOID);
 
 SELECT 'alter LogicalContainer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table LogicalContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LogicalContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LogicalContainer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LogicalContainer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter LogicalElement add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table LogicalElement add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LogicalElement add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LogicalElement set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LogicalElement.MOID group by ManagedObject.MOID);
 
 SELECT 'alter LogicalUnit add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table LogicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LogicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LogicalUnit set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LogicalUnit.MOID group by ManagedObject.MOID);
 
 SELECT 'alter ProtectionGroup add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table ProtectionGroup add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ProtectionGroup add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ProtectionGroup set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ProtectionGroup.MOID group by ManagedObject.MOID);
 
 SELECT 'alter SBNE add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table SBNE add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SBNE add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SBNE set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SBNE.MOID group by ManagedObject.MOID);
 
 SELECT 'alter NetworkElementManagement add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table NetworkElementManagement add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table NetworkElementManagement add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update NetworkElementManagement set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = NetworkElementManagement.MOID group by ManagedObject.MOID);
 
 SELECT 'alter DataObject add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table DataObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table DataObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update DataObject set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = DataObject.MOID group by ManagedObject.MOID);
 
 SELECT 'alter IpConfig add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table IpConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table IpConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update IpConfig set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = IpConfig.MOID group by ManagedObject.MOID);
 
 SELECT 'alter EventControl add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table EventControl add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EventControl add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EventControl set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EventControl.MOID group by ManagedObject.MOID);
 
 SELECT 'alter RelationObject add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table RelationObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table RelationObject add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update RelationObject set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = RelationObject.MOID group by ManagedObject.MOID);
 
 SELECT 'alter PhysicalUnitStream add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table PhysicalUnitStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PhysicalUnitStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PhysicalUnitStream set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PhysicalUnitStream.MOID group by ManagedObject.MOID);
 
 SELECT 'alter LogicalUnitStream add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table LogicalUnitStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LogicalUnitStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LogicalUnitStream set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LogicalUnitStream.MOID group by ManagedObject.MOID);
 
 SELECT 'alter LogStreamDataConfig add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table LogStreamDataConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LogStreamDataConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LogStreamDataConfig set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LogStreamDataConfig.MOID group by ManagedObject.MOID);
 
 SELECT 'alter LogStream add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table LogStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LogStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LogStream set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LogStream.MOID group by ManagedObject.MOID);
 
 SELECT 'alter Constituent add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table Constituent add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Constituent add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Constituent set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Constituent.MOID group by ManagedObject.MOID);
 
 SELECT 'alter ConnectivityData add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table ConnectivityData add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ConnectivityData add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ConnectivityData set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ConnectivityData.MOID group by ManagedObject.MOID);
 
 SELECT 'alter Interface add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table Interface add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Interface add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Interface set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Interface.MOID group by ManagedObject.MOID);
 
 SELECT 'alter InterfaceContainer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table InterfaceContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table InterfaceContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update InterfaceContainer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = InterfaceContainer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter Endpoint add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table Endpoint add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Endpoint add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Endpoint set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Endpoint.MOID group by ManagedObject.MOID);
 
 SELECT 'alter BlackBoxLogStream add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table BlackBoxLogStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BlackBoxLogStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BlackBoxLogStream set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BlackBoxLogStream.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CoreFileMgmtLogStream add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CoreFileMgmtLogStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CoreFileMgmtLogStream add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CoreFileMgmtLogStream set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CoreFileMgmtLogStream.MOID group by ManagedObject.MOID);
 
 SELECT 'alter HapNeControl add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table HapNeControl add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table HapNeControl add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update HapNeControl set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = HapNeControl.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpEthernetPortGroup add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpEthernetPortGroup add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpEthernetPortGroup add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpEthernetPortGroup set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpEthernetPortGroup.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpFileSystemInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpFileSystemInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpFileSystemInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpFileSystemInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpFileSystemInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidPortGroup add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidPortGroup add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidPortGroup add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidPortGroup set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidPortGroup.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpServerInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpServerInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpServerInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpServerInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpServerInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpEthernetPort add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpEthernetPort add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpEthernetPort add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpEthernetPort set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpEthernetPort.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidPort add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidPort add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidPort add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidPort set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidPort.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpCageInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpCageInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpCageInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpCageInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpCageInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpACL add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpACL add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpACL add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpACL set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpACL.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpFruInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpFruInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpFruInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpFruInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpFruInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpSystemInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpSystemInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpSystemInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpSystemInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpSystemInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpLocationInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpLocationInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpLocationInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpLocationInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpLocationInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpMonDevInfo add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpMonDevInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpMonDevInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpMonDevInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpMonDevInfo.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpCage add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpCage add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpCage add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpCage set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpCage.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpClusterManager add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpClusterManager add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpClusterManager add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpClusterManager set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpClusterManager.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpClusterManagerPG add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpClusterManagerPG add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpClusterManagerPG add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpClusterManagerPG set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpClusterManagerPG.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpEmsServer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpEmsServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpEmsServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpEmsServer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpEmsServer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpEmsServerPG add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpEmsServerPG add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpEmsServerPG add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpEmsServerPG set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpEmsServerPG.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpExtSwitch add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpExtSwitch add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpExtSwitch add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpExtSwitch set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpExtSwitch.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpFan add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpFan add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpFan add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpFan set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpFan.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpPEM add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpPEM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpPEM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpPEM set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpPEM.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaid add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaid add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaid add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaid set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaid.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidController add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidController add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidController add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidController set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidController.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidFan add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidFan add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidFan add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidFan set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidFan.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidLogicalDrive add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidLogicalDrive add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidLogicalDrive add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidLogicalDrive set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidLogicalDrive.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidLogicalUnit add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidLogicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidLogicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidLogicalUnit set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidLogicalUnit.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidPEM add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidPEM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidPEM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidPEM set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidPEM.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRaidPhysicalDrive add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRaidPhysicalDrive add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRaidPhysicalDrive add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRaidPhysicalDrive set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRaidPhysicalDrive.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpShmm add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpShmm add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpShmm add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpShmm set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpShmm.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpSwitch add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpSwitch add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpSwitch add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpSwitch set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpSwitch.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpTermServer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpTermServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpTermServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpTermServer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpTermServer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpSwitchUnit add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpSwitchUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpSwitchUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpSwitchUnit set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpSwitchUnit.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpRTM add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpRTM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpRTM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpRTM set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpRTM.MOID group by ManagedObject.MOID);
 
 SELECT 'alter BlackBoxDataConfig add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table BlackBoxDataConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BlackBoxDataConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BlackBoxDataConfig set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BlackBoxDataConfig.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpAirFilter add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpAirFilter add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpAirFilter add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpAirFilter set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpAirFilter.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpSystemAlarmPanel add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpSystemAlarmPanel add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpSystemAlarmPanel add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpSystemAlarmPanel set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpSystemAlarmPanel.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpShelfEEPROM add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpShelfEEPROM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpShelfEEPROM add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpShelfEEPROM set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpShelfEEPROM.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpShmmBMC add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpShmmBMC add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpShmmBMC add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpShmmBMC set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpShmmBMC.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpEmsSensor add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpEmsSensor add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpEmsSensor add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpEmsSensor set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpEmsSensor.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpExternalServer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpExternalServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpExternalServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpExternalServer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpExternalServer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpPSBlackBoxLS add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpPSBlackBoxLS add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpPSBlackBoxLS add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpPSBlackBoxLS set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpPSBlackBoxLS.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpPSCoreFileMgmtLS add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpPSCoreFileMgmtLS add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpPSCoreFileMgmtLS add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpPSCoreFileMgmtLS set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpPSCoreFileMgmtLS.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpPayloadServer add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpPayloadServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpPayloadServer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpPayloadServer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpPayloadServer.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpPayloadServerPG add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpPayloadServerPG add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpPayloadServerPG add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpPayloadServerPG set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpPayloadServerPG.MOID group by ManagedObject.MOID);
 
 SELECT 'alter CnpPSBlackBoxDC add NAME AND OWNERNAME columns, populate NAME' AS 'MIGRATION PROCESS STATUS...';
-alter table CnpPSBlackBoxDC add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CnpPSBlackBoxDC add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CnpPSBlackBoxDC set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CnpPSBlackBoxDC.MOID group by ManagedObject.MOID);
 
 SELECT 'alter PhysicalContainer table to drop MOID' AS 'MIGRATION PROCESS STATUS ... ';
@@ -1128,413 +1128,413 @@ alter table XmlcLocalConnectionLink DROP FOREIGN KEY FK98703D576E3AE897;
 alter table XmlcNetworkConnectionLink DROP FOREIGN KEY FKE5AB31DAB35DA85A;
 
 SELECT 'alter table AckFwdSystemLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table AckFwdSystemLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table AckFwdSystemLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update AckFwdSystemLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = AckFwdSystemLink.MOID group by ManagedObject.MOID);
 alter table AckFwdSystemLink drop column MOID;
 
 SELECT 'alter table BackupServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table BackupServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BackupServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BackupServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BackupServerLink.MOID group by ManagedObject.MOID);
 alter table BackupServerLink drop column MOID;
 
 SELECT 'alter table BillingServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table BillingServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BillingServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BillingServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BillingServerLink.MOID group by ManagedObject.MOID);
 alter table BillingServerLink drop column MOID;
 
 SELECT 'alter table BmgwClientThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table BmgwClientThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BmgwClientThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BmgwClientThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BmgwClientThrottleLink.MOID group by ManagedObject.MOID);
 alter table BmgwClientThrottleLink drop column MOID;
 
 SELECT 'alter table BmgwServerThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table BmgwServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BmgwServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BmgwServerThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BmgwServerThrottleLink.MOID group by ManagedObject.MOID);
 alter table BmgwServerThrottleLink drop column MOID;
 
 SELECT 'alter table BmgwServerUnavailableLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table BmgwServerUnavailableLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table BmgwServerUnavailableLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update BmgwServerUnavailableLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = BmgwServerUnavailableLink.MOID group by ManagedObject.MOID);
 alter table BmgwServerUnavailableLink drop column MOID;
 
 SELECT 'alter table CapacityLicenseLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table CapacityLicenseLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table CapacityLicenseLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update CapacityLicenseLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = CapacityLicenseLink.MOID group by ManagedObject.MOID);
 alter table CapacityLicenseLink drop column MOID;
 
 SELECT 'alter table ClassOfService populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ClassOfService add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ClassOfService add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ClassOfService set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ClassOfService.MOID group by ManagedObject.MOID);
 alter table ClassOfService drop column MOID;
 
 SELECT 'alter table Congestion populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Congestion add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Congestion add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Congestion set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Congestion.MOID group by ManagedObject.MOID);
 alter table Congestion drop column MOID;
 
 SELECT 'alter table ContentAdaptationLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ContentAdaptationLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ContentAdaptationLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ContentAdaptationLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ContentAdaptationLink.MOID group by ManagedObject.MOID);
 alter table ContentAdaptationLink drop column MOID;
 
 SELECT 'alter table DiskUsage populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table DiskUsage add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table DiskUsage add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update DiskUsage set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = DiskUsage.MOID group by ManagedObject.MOID);
 alter table DiskUsage drop column MOID;
 
 SELECT 'alter table DnsServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table DnsServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table DnsServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update DnsServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = DnsServerLink.MOID group by ManagedObject.MOID);
 alter table DnsServerLink drop column MOID;
 
 SELECT 'alter table EnumServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table EnumServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EnumServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EnumServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EnumServerLink.MOID group by ManagedObject.MOID);
 alter table EnumServerLink drop column MOID;
 
 SELECT 'alter table EnumServiceLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table EnumServiceLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EnumServiceLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EnumServiceLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EnumServiceLink.MOID group by ManagedObject.MOID);
 alter table EnumServiceLink drop column MOID;
 
 SELECT 'alter table EsmeLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table EsmeLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EsmeLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EsmeLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EsmeLink.MOID group by ManagedObject.MOID);
 alter table EsmeLink drop column MOID;
 
 SELECT 'alter table EsmeLocalConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table EsmeLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EsmeLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EsmeLocalConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EsmeLocalConnectionLink.MOID group by ManagedObject.MOID);
 alter table EsmeLocalConnectionLink drop column MOID;
 
 SELECT 'alter table EsmeNetworkConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table EsmeNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EsmeNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EsmeNetworkConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EsmeNetworkConnectionLink.MOID group by ManagedObject.MOID);
 alter table EsmeNetworkConnectionLink drop column MOID;
 
 SELECT 'alter table EsmeQueuedMessageLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table EsmeQueuedMessageLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table EsmeQueuedMessageLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update EsmeQueuedMessageLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = EsmeQueuedMessageLink.MOID group by ManagedObject.MOID);
 alter table EsmeQueuedMessageLink drop column MOID;
 
 SELECT 'alter table ExternalIPLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ExternalIPLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ExternalIPLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ExternalIPLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ExternalIPLink.MOID group by ManagedObject.MOID);
 alter table ExternalIPLink drop column MOID;
 
 SELECT 'alter table FileSystem populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table FileSystem add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table FileSystem add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update FileSystem set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = FileSystem.MOID group by ManagedObject.MOID);
 alter table FileSystem drop column MOID;
 
 SELECT 'alter table GeoRedSMSReplLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table GeoRedSMSReplLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table GeoRedSMSReplLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update GeoRedSMSReplLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = GeoRedSMSReplLink.MOID group by ManagedObject.MOID);
 alter table GeoRedSMSReplLink drop column MOID;
 
 SELECT 'alter table GeoRedSMSReplThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table GeoRedSMSReplThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table GeoRedSMSReplThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update GeoRedSMSReplThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = GeoRedSMSReplThrottleLink.MOID group by ManagedObject.MOID);
 alter table GeoRedSMSReplThrottleLink drop column MOID;
 
 SELECT 'alter table HssServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table HssServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table HssServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update HssServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = HssServerLink.MOID group by ManagedObject.MOID);
 alter table HssServerLink drop column MOID;
 
 SELECT 'alter table HssServerThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table HssServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table HssServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update HssServerThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = HssServerThrottleLink.MOID group by ManagedObject.MOID);
 alter table HssServerThrottleLink drop column MOID;
 
 SELECT 'alter table HssServerUnavailableConnection populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table HssServerUnavailableConnection add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table HssServerUnavailableConnection add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update HssServerUnavailableConnection set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = HssServerUnavailableConnection.MOID group by ManagedObject.MOID);
 alter table HssServerUnavailableConnection drop column MOID;
 
 SELECT 'alter table ImsGsmGwClientThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ImsGsmGwClientThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ImsGsmGwClientThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ImsGsmGwClientThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ImsGsmGwClientThrottleLink.MOID group by ManagedObject.MOID);
 alter table ImsGsmGwClientThrottleLink drop column MOID;
 
 SELECT 'alter table ImsGsmGwServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ImsGsmGwServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ImsGsmGwServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ImsGsmGwServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ImsGsmGwServerLink.MOID group by ManagedObject.MOID);
 alter table ImsGsmGwServerLink drop column MOID;
 
 SELECT 'alter table ImsGsmGwServerThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table ImsGsmGwServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table ImsGsmGwServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update ImsGsmGwServerThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = ImsGsmGwServerThrottleLink.MOID group by ManagedObject.MOID);
 alter table ImsGsmGwServerThrottleLink drop column MOID;
 
 SELECT 'alter table InterMateLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table InterMateLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table InterMateLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update InterMateLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = InterMateLink.MOID group by ManagedObject.MOID);
 alter table InterMateLink drop column MOID;
 
 SELECT 'alter table LnpServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table LnpServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LnpServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LnpServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LnpServerLink.MOID group by ManagedObject.MOID);
 alter table LnpServerLink drop column MOID;
 
 SELECT 'alter table LoadBalancerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table LoadBalancerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table LoadBalancerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update LoadBalancerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = LoadBalancerLink.MOID group by ManagedObject.MOID);
 alter table LoadBalancerLink drop column MOID;
 
 SELECT 'alter table M2paLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table M2paLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table M2paLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update M2paLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = M2paLink.MOID group by ManagedObject.MOID);
 alter table M2paLink drop column MOID;
 
 SELECT 'alter table M2paLogicalUnit populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table M2paLogicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table M2paLogicalUnit add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update M2paLogicalUnit set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = M2paLogicalUnit.MOID group by ManagedObject.MOID);
 alter table M2paLogicalUnit drop column MOID;
 
 SELECT 'alter table M2paSystemInfo populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table M2paSystemInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table M2paSystemInfo add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update M2paSystemInfo set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = M2paSystemInfo.MOID group by ManagedObject.MOID);
 alter table M2paSystemInfo drop column MOID;
 
 SELECT 'alter table MateLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MateLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MateLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MateLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MateLink.MOID group by ManagedObject.MOID);
 alter table MateLink drop column MOID;
 
 SELECT 'alter table MessagingSystem populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MessagingSystem add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MessagingSystem add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MessagingSystem set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MessagingSystem.MOID group by ManagedObject.MOID);
 alter table MessagingSystem drop column MOID;
 
 SELECT 'alter table Mm1Link populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Mm1Link add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Mm1Link add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Mm1Link set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Mm1Link.MOID group by ManagedObject.MOID);
 alter table Mm1Link drop column MOID;
 
 SELECT 'alter table MpSystemConfig populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MpSystemConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MpSystemConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MpSystemConfig set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MpSystemConfig.MOID group by ManagedObject.MOID);
 alter table MpSystemConfig drop column MOID;
 
 SELECT 'alter table MsgArchiveServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MsgArchiveServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MsgArchiveServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MsgArchiveServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MsgArchiveServerLink.MOID group by ManagedObject.MOID);
 alter table MsgArchiveServerLink drop column MOID;
 
 SELECT 'alter table MsgBladeLU populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MsgBladeLU add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MsgBladeLU add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MsgBladeLU set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MsgBladeLU.MOID group by ManagedObject.MOID);
 alter table MsgBladeLU drop column MOID;
 
 SELECT 'alter table MsgBladeLUContainer populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MsgBladeLUContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MsgBladeLUContainer add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MsgBladeLUContainer set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MsgBladeLUContainer.MOID group by ManagedObject.MOID);
 alter table MsgBladeLUContainer drop column MOID;
 
 SELECT 'alter table MsmMemUtilization populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table MsmMemUtilization add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table MsmMemUtilization add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update MsmMemUtilization set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = MsmMemUtilization.MOID group by ManagedObject.MOID);
 alter table MsmMemUtilization drop column MOID;
 
 SELECT 'alter table PeerMMSCLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table PeerMMSCLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PeerMMSCLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PeerMMSCLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PeerMMSCLink.MOID group by ManagedObject.MOID);
 alter table PeerMMSCLink drop column MOID;
 
 SELECT 'alter table PersonalizationConfig populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table PersonalizationConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PersonalizationConfig add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PersonalizationConfig set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PersonalizationConfig.MOID group by ManagedObject.MOID);
 alter table PersonalizationConfig drop column MOID;
 
 SELECT 'alter table PrepaidServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table PrepaidServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PrepaidServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PrepaidServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PrepaidServerLink.MOID group by ManagedObject.MOID);
 alter table PrepaidServerLink drop column MOID;
 
 SELECT 'alter table PrepaidServerThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table PrepaidServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PrepaidServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PrepaidServerThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PrepaidServerThrottleLink.MOID group by ManagedObject.MOID);
 alter table PrepaidServerThrottleLink drop column MOID;
 
 SELECT 'alter table QueueOverflow populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table QueueOverflow add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table QueueOverflow add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update QueueOverflow set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = QueueOverflow.MOID group by ManagedObject.MOID);
 alter table QueueOverflow drop column MOID;
 
 SELECT 'alter table RemoteSMSCThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table RemoteSMSCThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table RemoteSMSCThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update RemoteSMSCThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = RemoteSMSCThrottleLink.MOID group by ManagedObject.MOID);
 alter table RemoteSMSCThrottleLink drop column MOID;
 
 SELECT 'alter table SCSCFClientThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SCSCFClientThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SCSCFClientThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SCSCFClientThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SCSCFClientThrottleLink.MOID group by ManagedObject.MOID);
 alter table SCSCFClientThrottleLink drop column MOID;
 
 SELECT 'alter table SCSCFServerThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SCSCFServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SCSCFServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SCSCFServerThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SCSCFServerThrottleLink.MOID group by ManagedObject.MOID);
 alter table SCSCFServerThrottleLink drop column MOID;
 
 SELECT 'alter table SmppClientLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmppClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmppClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmppClientLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmppClientLink.MOID group by ManagedObject.MOID);
 alter table SmppClientLink drop column MOID;
 
 SELECT 'alter table SmppServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmppServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmppServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmppServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmppServerLink.MOID group by ManagedObject.MOID);
 alter table SmppServerLink drop column MOID;
 
 SELECT 'alter table SmscLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmscLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmscLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmscLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmscLink.MOID group by ManagedObject.MOID);
 alter table SmscLink drop column MOID;
 
 SELECT 'alter table SmscLocalConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmscLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmscLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmscLocalConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmscLocalConnectionLink.MOID group by ManagedObject.MOID);
 alter table SmscLocalConnectionLink drop column MOID;
 
 SELECT 'alter table SmscNetworkConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmscNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmscNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmscNetworkConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmscNetworkConnectionLink.MOID group by ManagedObject.MOID);
 alter table SmscNetworkConnectionLink drop column MOID;
 
 SELECT 'alter table SmscQueuedMessageLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmscQueuedMessageLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmscQueuedMessageLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmscQueuedMessageLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmscQueuedMessageLink.MOID group by ManagedObject.MOID);
 alter table SmscQueuedMessageLink drop column MOID;
 
 SELECT 'alter table SmtpClientLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmtpClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmtpClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmtpClientLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmtpClientLink.MOID group by ManagedObject.MOID);
 alter table SmtpClientLink drop column MOID;
 
 SELECT 'alter table SmtpLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmtpLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmtpLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmtpLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmtpLink.MOID group by ManagedObject.MOID);
 alter table SmtpLink drop column MOID;
 
 SELECT 'alter table SmtpLocalConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmtpLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmtpLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmtpLocalConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmtpLocalConnectionLink.MOID group by ManagedObject.MOID);
 alter table SmtpLocalConnectionLink drop column MOID;
 
 SELECT 'alter table SmtpNetworkConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmtpNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmtpNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmtpNetworkConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmtpNetworkConnectionLink.MOID group by ManagedObject.MOID);
 alter table SmtpNetworkConnectionLink drop column MOID;
 
 SELECT 'alter table SmtpQueuedMessageLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmtpQueuedMessageLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmtpQueuedMessageLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmtpQueuedMessageLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmtpQueuedMessageLink.MOID group by ManagedObject.MOID);
 alter table SmtpQueuedMessageLink drop column MOID;
 
 SELECT 'alter table SmtpServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SmtpServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SmtpServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SmtpServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SmtpServerLink.MOID group by ManagedObject.MOID);
 alter table SmtpServerLink drop column MOID;
 
 SELECT 'alter table SpamServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SpamServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SpamServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SpamServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SpamServerLink.MOID group by ManagedObject.MOID);
 alter table SpamServerLink drop column MOID;
 
 SELECT 'alter table SpamServerThrottleLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SpamServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SpamServerThrottleLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SpamServerThrottleLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SpamServerThrottleLink.MOID group by ManagedObject.MOID);
 alter table SpamServerThrottleLink drop column MOID;
 
 SELECT 'alter table SpamServerUnavailableConnection populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SpamServerUnavailableConnection add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SpamServerUnavailableConnection add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SpamServerUnavailableConnection set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SpamServerUnavailableConnection.MOID group by ManagedObject.MOID);
 alter table SpamServerUnavailableConnection drop column MOID;
 
 SELECT 'alter table Ss7AssociationLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Ss7AssociationLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Ss7AssociationLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Ss7AssociationLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Ss7AssociationLink.MOID group by ManagedObject.MOID);
 alter table Ss7AssociationLink drop column MOID;
 
 SELECT 'alter table Ss7PCLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Ss7PCLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Ss7PCLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Ss7PCLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Ss7PCLink.MOID group by ManagedObject.MOID);
 alter table Ss7PCLink drop column MOID;
 
 SELECT 'alter table Ss7Service populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table Ss7Service add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table Ss7Service add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update Ss7Service set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = Ss7Service.MOID group by ManagedObject.MOID);
 alter table Ss7Service drop column MOID;
 
 SELECT 'alter table StatSizeAuditLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table StatSizeAuditLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table StatSizeAuditLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update StatSizeAuditLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = StatSizeAuditLink.MOID group by ManagedObject.MOID);
 alter table StatSizeAuditLink drop column MOID;
 
 SELECT 'alter table StatisticsThreshold populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table StatisticsThreshold add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table StatisticsThreshold add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update StatisticsThreshold set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = StatisticsThreshold.MOID group by ManagedObject.MOID);
 alter table StatisticsThreshold drop column MOID;
 
 SELECT 'alter table SubLdapServerLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table SubLdapServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table SubLdapServerLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update SubLdapServerLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = SubLdapServerLink.MOID group by ManagedObject.MOID);
 alter table SubLdapServerLink drop column MOID;
 
 SELECT 'alter table TapClientLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TapClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TapClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TapClientLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TapClientLink.MOID group by ManagedObject.MOID);
 alter table TapClientLink drop column MOID;
 
 SELECT 'alter table TapLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TapLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TapLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TapLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TapLink.MOID group by ManagedObject.MOID);
 alter table TapLink drop column MOID;
 
 SELECT 'alter table TapLocalConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TapLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TapLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TapLocalConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TapLocalConnectionLink.MOID group by ManagedObject.MOID);
 alter table TapLocalConnectionLink drop column MOID;
 
 SELECT 'alter table TapNetworkConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TapNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TapNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TapNetworkConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TapNetworkConnectionLink.MOID group by ManagedObject.MOID);
 alter table TapNetworkConnectionLink drop column MOID;
 
 SELECT 'alter table TranscoderLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table TranscoderLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table TranscoderLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update TranscoderLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = TranscoderLink.MOID group by ManagedObject.MOID);
 alter table TranscoderLink drop column MOID;
 
 SELECT 'alter table UsageControlServiceLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table UsageControlServiceLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table UsageControlServiceLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update UsageControlServiceLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = UsageControlServiceLink.MOID group by ManagedObject.MOID);
 alter table UsageControlServiceLink drop column MOID;
 
 SELECT 'alter table VaspLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table VaspLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table VaspLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update VaspLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = VaspLink.MOID group by ManagedObject.MOID);
 alter table VaspLink drop column MOID;
 
 SELECT 'alter table XmlClientLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table XmlClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table XmlClientLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update XmlClientLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = XmlClientLink.MOID group by ManagedObject.MOID);
 alter table XmlClientLink drop column MOID;
 
 SELECT 'alter table XmlcLocalConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table XmlcLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table XmlcLocalConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update XmlcLocalConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = XmlcLocalConnectionLink.MOID group by ManagedObject.MOID);
 alter table XmlcLocalConnectionLink drop column MOID;
 
 SELECT 'alter table XmlcNetworkConnectionLink populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table XmlcNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table XmlcNetworkConnectionLink add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update XmlcNetworkConnectionLink set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = XmlcNetworkConnectionLink.MOID group by ManagedObject.MOID);
 alter table XmlcNetworkConnectionLink drop column MOID;
 
 ####Added on Feb-24-2017
 SELECT 'alter table PhysicalEntity populate NAME and drop MOID column' AS 'MIGRATION PROCESS STATUS ... ';
-alter table PhysicalEntity add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL after MOID;
+alter table PhysicalEntity add column NAME varchar(100) default NULL, add column OWNERNAME varchar(25) NOT NULL default 'NULL' after MOID;
 update PhysicalEntity set NAME=(select ManagedObject.NAME from ManagedObject where ManagedObject.MOID = PhysicalEntity.MOID group by ManagedObject.MOID);
 alter table PhysicalEntity drop column MOID;
 
