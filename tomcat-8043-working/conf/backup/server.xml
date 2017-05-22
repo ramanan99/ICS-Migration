@@ -1,0 +1,46 @@
+<!--
+<Server port="TOMCAT_SHUTDOWNPORT" shutdown="SHUTDOWN" debug="0" outputRedirect="false">
+  <Service name="Catalina">
+    	<Connector port="WEBCONTAINER_PORT" maxThreads="50" minSpareThreads="3" maxSpareThreads="10" enableLookups="true" acceptCount="100" connectionTimeout="-1" disableUploadTimeout="true" URIEncoding="UTF-8" compression="force" compressionMinSize="1024" noCompressionUserAgents="gozilla, traviata" compressableMimeType="text/html,text/xml"/>   
+    <Engine name="Catalina" defaultHost="localhost" debug="0">
+      <Host name="localhost" debug="0" unpackWARs="true" appBase="webapps" autoDeploy="true" xmlValidation="false" xmlNamespaceAware="false">
+	<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="common" resolveHosts="false"/> 
+	 <Context path="" docBase="WEBNMS_ROOT_DIR" debug="0" privileged="true" reloadable="true">
+<Manager pathname=""/>
+</Context>
+      </Host>
+
+    </Engine>
+
+  </Service>
+
+</Server>
+-->
+
+<Server port="TOMCAT_SHUTDOWNPORT" shutdown="SHUTDOWN">
+	<Service name="Tomcat">
+		<Connector server="TomcatServer" port="WEBSERVER_PORT" maxPostSize="2097152" maxSavePostSize="4096" maxHttpHeaderSize="8192" debug="4" compressableMimeType="text/html,text/xml,text/plain" protocol="HTTP/1.1" xpoweredBy="false"  maxThreads="100" compression="force" URIEncoding="UTF-8" minProcessors="3" connectionTimeout="60000" maxProcessors="60" acceptCount="10" enableLookups="false" />
+
+<!--
+-->
+
+        <Connector port="SSL_PORT" ciphers="TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA" server="TomcatServer" URIEncoding="UTF-8" minProcessors="3" maxProcessors="60" acceptCount="10" debug="4" protocol="HTTP/1.1" enableLookups="false" SSLEnabled="true" scheme="https" secure="true" compressableMimeType="text/html,text/xml,text/plain" compression="force" maxThreads="100" clientAuth="false" keystoreFile="conf/BETransKey.key" keystorePass="webnms" sslProtocol="TLS" sslProtocols="TLSv1.2,TLSv1.1,TLSv1,SSLv2Hello" sslEnabledProtocols="TLSv1.2,TLSv1.1,TLSv1,SSLv2Hello" sessionTimeout="0" xpoweredBy="false" allowTrace="false" maxHttpHeaderSize="8192" connectionTimeout="60000" maxPostSize="2097152" maxSavePostSize="4096"/>
+
+        <!--
+		For the tomcat.keystore certificate make sure that the keystorePass 
+		is placed last in the statment to ensure the password be replaced 
+		correctly during certificate creation 
+		-->
+        <Connector protocol="org.apache.coyote.http11.Http11Protocol" port="10443" ciphers="TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA" minProcessors="5" maxProcessors="75" enableLookups="true" disableUploadTimeout="true" acceptCount="100"  maxThreads="200" scheme="https" secure="true" SSLEnabled="true" sslProtocols="TLSv1.2,TLSv1.1,TLSv1,SSLv2Hello" sslEnabledProtocols="TLSv1.2,TLSv1.1,TLSv1,SSLv2Hello" server="TomcatServer" keystoreFile="conf/BETransKey.key" keystorePass="webnms"/>
+
+		<Engine name="TomcatServer" defaultHost="localhost">
+			<Host name="localhost"  appBase="webapps" unpackWARs="true" autoDeploy="true" deployOnStartup="true" xmlValidation="false" xmlNamespaceAware="false">
+ 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
+				<Context path="" docBase="WEBNMS_ROOT_DIR" privileged="true" reloadable="true" crossContext="false">
+					<Manager pathname=""/>
+					<Resources allowLinking="true" />
+				</Context>
+			 </Host>
+		</Engine>
+	</Service>
+ </Server>
