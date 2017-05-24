@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<License>
+   <!--Please do not edit this license file. Editing this file will make the license invalid.-->
+   <Users>
+      <UserInfo Name="Evaluation User" CompanyName="AdventNet" EmailID="licensing@adventnet.com" ACNTRL="NO" NoOfDays="45" LicenseType="Evaluation" Key="f1PVQTxllAaDQaSnGyaG1Taf3cfXfTTT3c3GSzKzu1PXfTRyJPbDuSKPdJ7yxRPTnP3DubT7GRb9KbDcfpa7SNDndNKSAPlTnua7xPJV">
+         <ID>ID</ID>
+      </UserInfo>
+   </Users>
+   <LicenseeDetails ID="ID">
+      <Product Name="AdventNet WebNMS" Version="5.0.0" Type="RME" Category="OEM"/>
+      <Component Name="Topo">
+         <Properties Name="NumberOfMO" Value="unlimited"/>
+      </Component>
+      <Component Name="ServerFramework">
+         <Properties Name="NumberOfClients" Value="unlimited"/>
+         <Properties Name="BEFailOver" Value="true"/>
+         <Properties Name="DistributedPoller" Value="true"/>
+         <Properties Name="PollerCount" Value="2"/>
+      </Component>
+      <Component Name="NorthBound">
+         <Properties Name="CORBANorthBound" Value="true"/>
+         <Properties Name="JMXAgent" Value="true"/>
+      </Component>
+      <Component Name="SouthBound">
+         <Properties Name="CORBASouthBound" Value="true"/>
+         <Properties Name="TL1SouthBound" Value="true"/>
+      </Component>
+      <Component Name="Provisioning">
+         <Properties Name="Provisioning" Value="true"/>
+      </Component>
+      <Component Name="Studio"/>
+      <Component Name="DistributedMonitoring">
+         <Properties Name="NumberOfProbes" Value="10"/>
+      </Component>
+      <Component Name="ApplicationMonitoring"/>
+      <Component Name="Syslog"/>
+   </LicenseeDetails>
+   <LicenseKey>ijLskoiN8Rj48NjMNj84XY8LHHA01svQjRpFORvQmKniN8Rj48NjMGv4KQ8R4s8dj8GK4ovKR4iN8Nj8s83jRpiN8Nj8s83jRpvKR4GNKjbC4Kjo1ltvKR4GNKjbC4KjoAbrOPGNKjbC4KjovKR44NviAxMSvKR4GNKjbC4RjnAbrOPGNKjbC4RjnW4NKjPRvLLjpvKR4RvLLjpGv4KQ8R4s8dvKR4Rv3OL8XfgbGv48m8LNKs4Nv8LPFORvQmKnyRjvvmXRfRv3RvoGv48m8LNKOMFORvQmKnjHjtMgOgMr0I0I5oMnQvas4vn4Nv3GAdjdj</LicenseKey>
+</License>
+<!-- $Id: StandardEvaluation.xml,v 1.3 2008/09/24 07:34:12 gnanasekar Exp $ -->
