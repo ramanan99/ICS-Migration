@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="RelationshipChangeEvent" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.EMHInfoEvent" name="com.motorola.emh.core.modeling.RelationshipChangeEvent" select-before-update="true">
+<join fetch="select" table="RelationshipChangeEvent">
+<key on-delete="cascade">
+<column name="ID"/>
+</key>
+<property column="SOURCEINDICATOR" length="11" name="sourceIndicator" type="integer"/>
+<property column="OLDRELATIONSHIPID" length="20" name="oldRelationshipId" type="long"/>
+<property column="NEWRELATIONSHIPID" length="20" name="newRelationshipId" type="long"/>
+<property column="SOURCEOBJECTCLASS" length="100" name="sourceObjectClass" type="string"/>
+<property column="SOURCEOBJECTID" length="100" name="sourceObjectId" type="string"/>
+<property column="TARGETOBJECTCLASS" length="100" name="targetObjectClass" type="string"/>
+<property column="TARGETOBJECTID" length="100" name="targetObjectId" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

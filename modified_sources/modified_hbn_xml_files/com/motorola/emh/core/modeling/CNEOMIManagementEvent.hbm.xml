@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CNEOMIManagementEvent" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.EMHInfoEvent" name="com.motorola.emh.core.modeling.CNEOMIManagementEvent" select-before-update="true">
+<join fetch="select" table="CNEOMIManagementEvent">
+<key on-delete="cascade">
+<column name="ID"/>
+</key>
+<property column="CNEOMIEVENTTYPE" length="11" name="cneomiEventType" type="integer"/>
+<property column="MGMTREASONCODE" length="11" name="mgmtReasonCode" type="integer"/>
+<property column="ADDITIONALDATA" length="8192" name="additionalData" type="string"/>
+<property column="AUDITMISSEDAUTOPROVOUT" length="11" name="auditMissedAutoProvOut" type="integer"/>
+<property column="AUDITMISSEDALARMSOUT" length="11" name="auditMissedAlarmsOut" type="integer"/>
+<property column="AUDITEVENTBUFFEROVERFLOWOUT" length="11" name="auditEventBufferOverflowOut" type="integer"/>
+<property column="AUDITMISSEDSTATECHANGESOUT" length="11" name="auditMissedStateChangesOut" type="integer"/>
+<property column="AUDITMISSEDKEYSTATSOUT" length="11" name="auditMissedKeyStatsOut" type="integer"/>
+<property column="AUDITLASTCONNECTIONTIMEOUT" length="20" name="auditLastConnectionTimeOut" type="long"/>
+<property column="AUDITMISSEDNEOWNEDDATAOUT" length="11" name="auditMissedNEOwnedDataOut" type="integer"/>
+<property column="COMPLETIONPERCENTAGE" length="11" name="completionPercentage" type="integer"/>
+</join>
+</subclass>
+</hibernate-mapping>

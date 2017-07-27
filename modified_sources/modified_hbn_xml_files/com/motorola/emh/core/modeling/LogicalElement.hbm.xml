@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="LogicalElement" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.topodb.ManagedObject" name="com.motorola.emh.core.modeling.LogicalElement" select-before-update="true">
+<join fetch="select" table="LogicalElement">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="ENTITYIDENTIFIER" length="20" name="entityIdentifier" type="long"/>
+<property column="ENTITYTYPE" length="20" name="entityType" type="long"/>
+<property column="OPSTATE" length="20" name="opState" type="long"/>
+<property column="ADMINSTATE" length="20" name="adminState" type="long"/>
+<property column="REASONCODE" length="20" name="reasonCode" type="long"/>
+</join>
+</subclass>
+</hibernate-mapping>

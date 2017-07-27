@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="PhysicalContainer" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.PhysicalEntity" name="com.motorola.emh.core.modeling.PhysicalContainer" select-before-update="true">
+<join fetch="select" table="PhysicalContainer">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="ADMINSTATE" length="20" name="adminState" type="long"/>
+<property column="USAGESTATE" length="20" name="usageState" type="long"/>
+<property column="AVAILABILITYSTATUS" length="20" name="availabilityStatus" type="long"/>
+<property column="REASONCODE" length="20" name="reasonCode" type="long"/>
+<property column="IPADDRESS" length="50" name="ipAddress" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

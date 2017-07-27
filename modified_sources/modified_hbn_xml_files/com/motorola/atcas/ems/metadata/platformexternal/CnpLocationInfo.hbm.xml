@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpLocationInfo" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" name="com.motorola.atcas.ems.metadata.platformexternal.CnpLocationInfo" select-before-update="true">
+<join fetch="select" table="CnpLocationInfo">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="SITEID" length="128" name="siteID" type="string"/>
+<property column="BUILDINGID" length="128" name="buildingID" type="string"/>
+<property column="FLOORID" length="128" name="floorID" type="string"/>
+<property column="CABINETID" length="128" name="cabinetID" type="string"/>
+<property column="MOUNTEDHEIGHT" length="20" name="mountedHeight" type="long"/>
+</join>
+</subclass>
+</hibernate-mapping>

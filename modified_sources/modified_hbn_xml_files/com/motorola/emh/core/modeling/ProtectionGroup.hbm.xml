@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="ProtectionGroup" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.topodb.ManagedObject" name="com.motorola.emh.core.modeling.ProtectionGroup" select-before-update="true">
+<join fetch="select" table="ProtectionGroup">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="NVALUE" length="20" name="NValue" type="long"/>
+<property column="OPSTATE" length="11" name="opState" type="integer"/>
+<property column="ENTITYIDENTIFIER" length="20" name="entityIdentifier" type="long"/>
+<property column="ENTITYTYPE" length="20" name="entityType" type="long"/>
+</join>
+</subclass>
+</hibernate-mapping>

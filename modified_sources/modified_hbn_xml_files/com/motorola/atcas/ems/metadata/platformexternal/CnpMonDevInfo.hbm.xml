@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpMonDevInfo" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" name="com.motorola.atcas.ems.metadata.platformexternal.CnpMonDevInfo" select-before-update="true">
+<join fetch="select" table="CnpMonDevInfo">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="MONITORINGMETHOD" length="20" name="monitoringMethod" type="long"/>
+<property column="SOURCEHOSTIP" length="128" name="sourceHostIP" type="string"/>
+<property column="READCOMMUNITYSTRING" length="128" name="readCommunityString" type="string"/>
+<property column="WRITECOMMUNITYSTRING" length="128" name="writeCommunityString" type="string"/>
+<property column="SNMPTIMEOUT" length="20" name="SNMPtimeout" type="long"/>
+<property column="SNMPRETRIES" length="20" name="SNMPretries" type="long"/>
+<property column="POLLINGINTERVAL" length="20" name="pollingInterval" type="long"/>
+<property column="SECURITYLEVEL" length="128" name="securityLevel" type="string"/>
+<property column="V3CONTEXTNAME" length="128" name="v3ContextName" type="string"/>
+<property column="V3USERNAME" length="128" name="v3UserName" type="string"/>
+<property column="V3AUTHPROTOCOL" length="128" name="v3AuthProtocol" type="string"/>
+<property column="V3PRIVPROTOCOL" length="128" name="v3PrivProtocol" type="string"/>
+<property column="V3PRIVPASSWORD" length="128" name="v3PrivPassword" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

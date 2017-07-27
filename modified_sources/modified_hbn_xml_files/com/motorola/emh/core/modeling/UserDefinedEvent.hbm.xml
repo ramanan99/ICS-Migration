@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="UserDefinedEvent" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.EMHInfoEvent" name="com.motorola.emh.core.modeling.UserDefinedEvent" select-before-update="true">
+<join fetch="select" table="UserDefinedEvent">
+<key on-delete="cascade">
+<column name="ID"/>
+</key>
+<property column="USERDEFINEDEVENTCATEGORY" length="20" name="userDefinedEventCategory" type="long"/>
+<property column="USERDEFINEDEVENTID" length="20" name="userDefinedEventId" type="long"/>
+<property column="ADDITIONALDATA" length="8192" name="additionalData" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

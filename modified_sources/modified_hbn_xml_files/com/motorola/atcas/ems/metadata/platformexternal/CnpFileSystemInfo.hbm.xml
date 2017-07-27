@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpFileSystemInfo" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" lazy="false" name="com.motorola.atcas.ems.metadata.platformexternal.CnpFileSystemInfo" select-before-update="true">
+<join fetch="select" table="CnpFileSystemInfo">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="FSEXISTS" length="10" name="fsexists" type="boolean"/>
+<property column="DEVICE" length="128" name="device" type="string"/>
+<property column="MOUNTPOINT" length="128" name="mountPoint" type="string"/>
+<property column="FSTYPE" length="128" name="fsType" type="string"/>
+<property column="MODE" length="128" name="mode" type="string"/>
+<property column="SIZE" length="128" name="size" type="string"/>
+<property column="BRDMGRFSWARNTH" length="20" name="BrdMgrFsWarnTh" type="long"/>
+<property column="BRDMGRFSCRITTH" length="20" name="BrdMgrFsCritTh" type="long"/>
+<property column="BRDMGRFSCURSEVERITY" length="128" name="BrdMgrFsCurSeverity" type="string"/>
+<property column="BRDMGRFSPREVSEVERITY" length="128" name="BrdMgrFsPrevSeverity" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

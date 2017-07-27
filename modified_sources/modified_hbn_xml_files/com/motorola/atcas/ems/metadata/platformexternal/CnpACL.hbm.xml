@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpACL" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" name="com.motorola.atcas.ems.metadata.platformexternal.CnpACL" select-before-update="true">
+<join fetch="select" table="CnpACL">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="IPCHAIN" length="128" name="ipchain" type="string"/>
+<property column="RULENUMBER" length="20" name="ruleNumber" type="long"/>
+<property column="PROTOCOL" length="128" name="protocol" type="string"/>
+<property column="INIFACE" length="128" name="inIface" type="string"/>
+<property column="OUTIFACE" length="128" name="outIface" type="string"/>
+<property column="SOURCEIP" length="128" name="sourceIP" type="string"/>
+<property column="SOURCEMASK" length="128" name="sourceMask" type="string"/>
+<property column="SOURCEPORTSTART" length="128" name="sourcePortStart" type="string"/>
+<property column="SOURCEPORTEND" length="128" name="sourcePortEnd" type="string"/>
+<property column="ICMPTYPE" length="128" name="icmpType" type="string"/>
+<property column="DESTINATIONIP" length="128" name="destinationIp" type="string"/>
+<property column="DESTINATIONMASK" length="128" name="destinationMask" type="string"/>
+<property column="DESTINATIONPORTSTART" length="128" name="destinationPortStart" type="string"/>
+<property column="DESTINATIONPORTEND" length="128" name="destinationPortEnd" type="string"/>
+<property column="TARGET" length="128" name="target" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

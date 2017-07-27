@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpServerInfo" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" name="com.motorola.atcas.ems.metadata.platformexternal.CnpServerInfo" select-before-update="true">
+<join fetch="select" table="CnpServerInfo">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="BRDMGRCPUWARNTH" length="20" name="BrdMgrCpuWarnTh" type="long"/>
+<property column="BRDMGRCPUCRITTH" length="20" name="BrdMgrCpuCritTh" type="long"/>
+<property column="BRDMGRMEMWARNTH" length="20" name="BrdMgrMemWarnTh" type="long"/>
+<property column="BRDMGRMEMCRITTH" length="20" name="BrdMgrMemCritTh" type="long"/>
+<property column="BRDMGRFCCRITTH" length="20" name="BrdMgrFcCritTh" type="long"/>
+<property column="BRDMGRETHCRITTH" length="20" name="BrdMgrEthCritTh" type="long"/>
+<property column="BRDMGRIPDIAGLIST" length="128" name="BrdMgrIpDiagList" type="string"/>
+<property column="ASSOCIATEDDEVICES" length="128" name="associatedDevices" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

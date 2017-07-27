@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="LogStream" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.topodb.ManagedObject" name="com.motorola.atcas.ems.metadata.cneomi.streams.LogStream" select-before-update="true">
+<join fetch="select" table="LogStream">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="LOGGINGENABLED" length="10" name="loggingEnabled" type="boolean"/>
+<property column="NUMBEROFLOGSAVAILABLE" length="20" name="numberOfLogsAvailable" type="long"/>
+<property column="CURRENTSTREAMLEVEL" length="20" name="currentStreamLevel" type="long"/>
+<property column="CONFIGSTREAMLEVEL" length="20" name="configStreamLevel" type="long"/>
+<property column="STREAMDESTINATION" length="128" name="streamDestination" type="string"/>
+<property column="CAPABLEOFSTREAMING" length="10" name="capableOfStreaming" type="boolean"/>
+<property column="CAPABLEOFLOGGING" length="10" name="capableOfLogging" type="boolean"/>
+<property column="CAPABLEOFDISABLINGLOGGING" length="10" name="capableOfDisablingLogging" type="boolean"/>
+<property column="DECODINGSCHEME" length="128" name="decodingScheme" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

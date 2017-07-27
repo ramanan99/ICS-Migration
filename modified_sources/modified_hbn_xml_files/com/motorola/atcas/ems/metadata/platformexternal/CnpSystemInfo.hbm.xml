@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpSystemInfo" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" name="com.motorola.atcas.ems.metadata.platformexternal.CnpSystemInfo" select-before-update="true">
+<join fetch="select" table="CnpSystemInfo">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="ALARMPROXYSNMPPORT" length="20" name="alarmProxySNMPport" type="long"/>
+<property column="ALARMPROXYTRAPCOMMUNITYSTRING" length="128" name="alarmProxyTrapCommunityString" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

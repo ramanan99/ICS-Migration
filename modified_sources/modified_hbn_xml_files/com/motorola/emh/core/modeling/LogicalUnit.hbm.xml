@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="LogicalUnit" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.LogicalElement" name="com.motorola.emh.core.modeling.LogicalUnit" select-before-update="true">
+<join fetch="select" table="LogicalUnit">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="CONTROLSTATUS" length="20" name="controlStatus" type="long"/>
+<property column="AVAILABILITYSTATUS" length="20" name="availabilityStatus" type="long"/>
+<property column="USAGESTATE" length="20" name="usageState" type="long"/>
+</join>
+</subclass>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="HapNeControl" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.DataObject" lazy="false" name="com.motorola.atcas.ems.metadata.exthapcoreextension.exthapnecontrol.HapNeControl" select-before-update="true">
+<join fetch="select" table="HapNeControl">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="AGENTADDRESS" length="128" name="agentAddress" type="string"/>
+<property column="LATITUDE" length="20" name="latitude" type="long"/>
+<property column="LONGITUDE" length="20" name="longitude" type="long"/>
+<property column="LOADTIMEOUT" length="20" name="loadTimeOut" type="long"/>
+</join>
+</subclass>
+</hibernate-mapping>

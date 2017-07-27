@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="LogStreamDataConfig" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.topodb.ManagedObject" name="com.motorola.atcas.ems.metadata.cneomi.streams.LogStreamDataConfig" select-before-update="true">
+<join fetch="select" table="LogStreamDataConfig">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="STARTXMIT" length="128" name="startXmit" type="string"/>
+<property column="STOPXMIT" length="128" name="stopXmit" type="string"/>
+<property column="PERIODICITY" length="20" name="periodicity" type="long"/>
+<property column="FILTERCONFIG" length="128" name="filterConfig" type="string"/>
+<property column="CONTROLCONFIG" length="128" name="controlConfig" type="string"/>
+<property column="ACTIVE" length="10" name="active" type="boolean"/>
+</join>
+</subclass>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="CnpEthernetPortGroup" dynamic-insert="true" dynamic-update="true" extends="com.motorola.atcas.ems.metadata.cneomi.connectivity.InterfaceContainer" name="com.motorola.atcas.ems.metadata.platformexternal.CnpEthernetPortGroup" select-before-update="true">
+<join fetch="select" table="CnpEthernetPortGroup">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="GROUPNAME" length="128" name="groupName" type="string"/>
+<property column="MAC" length="128" name="mac" type="string"/>
+<property column="MONITORINGMODE" length="128" name="monitoringMode" type="string"/>
+<property column="ARPINTERVAL" length="20" name="arpInterval" type="long"/>
+<property column="ARPIPTARGET" length="128" name="arpIpTarget" type="string"/>
+<property column="DOWNDELAY" length="20" name="downdelay" type="long"/>
+<property column="LACPRATE" length="1" name="lacpRate" type="boolean"/>
+<property column="MAXBONDS" length="20" name="maxBonds" type="long"/>
+<property column="MIIMON" length="20" name="miimon" type="long"/>
+<property column="MODE" length="20" name="mode" type="long"/>
+<property column="UPDELAY" length="20" name="updelay" type="long"/>
+<property column="USECARRIER" length="1" name="useCarrier" type="boolean"/>
+<property column="XMITHASHPOLICY" length="128" name="xmitHashPolicy" type="string"/>
+<property column="ARPVALIDATE" length="20" name="arpValidate" type="long"/>
+<property column="BOOTPROTO" length="128" name="bootProto" type="string"/>
+<property column="STARTMODE" length="128" name="startMode" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="EMHEvent" dynamic-insert="true" dynamic-update="true" extends="com.motorola.emh.core.modeling.EMHInfoEvent" name="com.motorola.emh.core.modeling.EMHEvent" select-before-update="true">
+<join fetch="select" table="EMHEvent">
+<key on-delete="cascade">
+<column name="ID"/>
+</key>
+<property column="PROBABLECAUSE" length="20" name="probableCause" type="long"/>
+<property column="SPECIFICPROBLEMS" length="20" name="specificProblems" type="long"/>
+<property column="BACKEDUPSTATUS" length="11" name="backedupStatus" type="integer"/>
+<property column="BACKUPOBJECTCLASS" length="50" name="backupObjectClass" type="string"/>
+<property column="BACKUPOBJECTID" length="50" name="backupObjectId" type="string"/>
+<property column="TRENDINDICATION" length="20" name="trendIndication" type="long"/>
+<property column="TRIGGEREDTHRESHOLD" length="100" name="triggeredThreshold" type="string"/>
+<property column="THRESHOLDOBSERVEDVALUE" length="50" name="thresholdObservedValue" type="string"/>
+<property column="THRESHOLDUPDOWNINDICATOR" length="11" name="thresholdUpDownIndicator" type="integer"/>
+<property column="THRESHOLDHIGH" length="100" name="thresholdHigh" type="string"/>
+<property column="THRESHOLDLOW" length="100" name="thresholdLow" type="string"/>
+<property column="THRESHOLDARMTIME" length="20" name="thresholdArmTime" type="long"/>
+</join>
+</subclass>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="SBNE" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.topodb.ManagedObject" name="com.motorola.emh.core.modeling.SBNE" select-before-update="true">
+<join fetch="select" table="SBNE">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="SWUPGRADETYPE" length="11" name="swUpgradeType" type="integer"/>
+<property column="SWUPGRADESTATE" length="11" name="swUpgradeState" type="integer"/>
+<property column="RUNNINGSWVERSION" length="100" name="runningSwVersion" type="string"/>
+<property column="NEXTLOADSWVERSION" length="100" name="nextLoadSwVersion" type="string"/>
+<property column="CONFIGSYNCHSTATE" length="11" name="configSynchState" type="integer"/>
+<property column="ALARMSYNCHSTATE" length="11" name="alarmSynchState" type="integer"/>
+<property column="STATUSSYNCHSTATE" length="11" name="statusSynchState" type="integer"/>
+<property column="ENTITYIDENTIFIER" length="20" name="entityIdentifier" type="long"/>
+<property column="ENTITYTYPE" length="20" name="entityType" type="long"/>
+<property column="CURRENTSWVERSION" length="100" name="currentSWVersion" type="string"/>
+<property column="PREVIOUSSWVERSION" length="100" name="previousSwVersion" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

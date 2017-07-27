@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass abstract="false" discriminator-value="EMHAlert" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.alertdb.Alert" name="com.motorola.emh.core.modeling.EMHAlert" select-before-update="true">
+<join fetch="select" table="EMHAlert">
+<key on-delete="cascade">
+<column name="ENTITY"/>
+</key>
+<property column="PROBABLECAUSE" length="20" name="probableCause" type="long"/>
+<property column="SPECIFICPROBLEMS" length="20" name="specificProblems" type="long"/>
+<property column="BACKEDUPSTATUS" length="11" name="backedupStatus" type="integer"/>
+<property column="BACKUPOBJECTCLASS" length="50" name="backupObjectClass" type="string"/>
+<property column="BACKUPOBJECTID" length="50" name="backupObjectId" type="string"/>
+<property column="TRENDINDICATION" length="11" name="trendIndication" type="integer"/>
+<property column="TRIGGEREDTHRESHOLDCLASS" length="100" name="triggeredThresholdClass" type="string"/>
+<property column="TRIGGEREDTHRESHOLDID" length="100" name="triggeredThresholdId" type="string"/>
+<property column="THRESHOLDOBSERVEDVALUE" length="100" name="thresholdObservedValue" type="string"/>
+<property column="THRESHOLDUPDOWNINDICATOR" length="11" name="thresholdUpDownIndicator" type="integer"/>
+<property column="THRESHOLDHIGH" length="100" name="thresholdHigh" type="string"/>
+<property column="THRESHOLDLOW" length="100" name="thresholdLow" type="string"/>
+<property column="THRESHOLDARMTIME" length="20" name="thresholdArmTime" type="long"/>
+<property column="INVOKEDIDENTIFIER" length="11" name="invokedIdentifier" type="integer"/>
+<property column="MANAGEDOBJECTCLASS" length="100" name="managedObjectClass" type="string"/>
+<property column="MANAGEDOBJECTID" length="100" name="managedObjectId" type="string"/>
+<property column="MODE" length="11" name="mode" type="integer"/>
+<property column="NOTIFICATIONID" length="20" name="notificationId" type="long"/>
+<property column="CORRELATEDNOTIFICATION" length="20" name="correlatedNotification" type="long"/>
+<property column="ADDITIONALINFORMATION" length="256" name="additionalInformation" type="string"/>
+<property column="CORRELATIONTAG" length="20" name="correlationTag" type="long"/>
+<property column="SEQUENCETAG" length="20" name="sequenceTag" type="long"/>
+<property column="USERDEVICENAME" length="100" name="userDeviceName" type="string"/>
+<property column="CORRELATED" length="11" name="correlated" type="integer"/>
+</join>
+</subclass>
+</hibernate-mapping>

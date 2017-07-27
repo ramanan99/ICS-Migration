@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="DataObject" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.topodb.ManagedObject" name="com.motorola.emh.core.modeling.DataObject" select-before-update="true">
+<join fetch="select" table="DataObject">
+<key on-delete="cascade">
+<column name="MOID"/>
+</key>
+<property column="ENTITYIDENTIFIER" length="20" name="entityIdentifier" type="long"/>
+<property column="MONAME" length="100" name="MOName" type="string"/>
+</join>
+</subclass>
+</hibernate-mapping>

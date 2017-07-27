@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<subclass discriminator-value="EMHInfoEvent" dynamic-insert="true" dynamic-update="true" extends="com.adventnet.nms.eventdb.Event" name="com.motorola.emh.core.modeling.EMHInfoEvent" select-before-update="true">
+<join fetch="select" table="EMHInfoEvent">
+<key on-delete="cascade">
+<column name="ID"/>
+</key>
+<property column="INVOKEDIDENTIFIER" length="11" name="invokedIdentifier" type="integer"/>
+<property column="MANAGEDOBJECTCLASS" length="100" name="managedObjectClass" type="string"/>
+<property column="MANAGEDOBJECTID" length="100" name="managedObjectId" type="string"/>
+<property column="MODE" length="11" name="mode" type="integer"/>
+<property column="NOTIFICATIONID" length="20" name="notificationId" type="long"/>
+<property column="CORRELATEDNOTIFICATION" length="20" name="correlatedNotification" type="long"/>
+<property column="ADDITIONALINFORMATION" length="256" name="additionalInformation" type="string"/>
+<property column="CORRELATIONTAG" length="20" name="correlationTag" type="long"/>
+<property column="SEQUENCETAG" length="20" name="sequenceTag" type="long"/>
+<property column="USERDEVICENAME" length="100" name="userDeviceName" type="string"/>
+<property column="CORRELATED" length="11" name="correlated" type="integer"/>
+</join>
+</subclass>
+</hibernate-mapping>
