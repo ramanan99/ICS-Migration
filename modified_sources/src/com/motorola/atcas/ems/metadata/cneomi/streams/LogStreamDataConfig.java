@@ -104,8 +104,7 @@ public class LogStreamDataConfig extends ManagedObject
             controlConfig = controlConfig_value;
         //String active_value = (String)props.remove("active");
         //if(active_value != null)
-            active = true;
-			props.setProperty("active", "true");
+         		props.setProperty("active", "true");
 			props.setProperty("periodicity", "0");
         super.setProperties(props);
     }
@@ -127,6 +126,7 @@ public class LogStreamDataConfig extends ManagedObject
         //if(getActive() != null)
            // props.put("active", getActive().toString());
 		   props.put("active", "true");
+			props.setProperty("periodicity", "0");
         return props;
     }
 
